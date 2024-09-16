@@ -35,19 +35,19 @@ Feedback:
 
 To test the web-app:    
 - Launch the simulation:   
-'roslaunch tortoisebot_gazebo tortoisebot_docking.launch'
+`roslaunch tortoisebot_gazebo tortoisebot_docking.launch`
 
 - Launch ROSBridge + the video servers:      
-`roslaunch course_web_dev_ros web.launch' 
+`roslaunch course_web_dev_ros web.launch`    
 
 - Launch the mapping node:
-'roslaunch tortoisebot_slam mapping.launch'
+`roslaunch tortoisebot_slam mapping.launch`
 
 - Launch the waypoints action server:
-'rosrun course_web_dev_ros tortoisebot_action_server.py'
+`rosrun course_web_dev_ros tortoisebot_action_server.py`
 
 - Start the web-app:
-'''
+```
 cd ~/webpage_ws/tortoisebot_webapp
 python -m http.server 7000
-'''
+```
