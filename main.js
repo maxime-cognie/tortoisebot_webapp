@@ -6,7 +6,7 @@ var app = new Vue({
         ros: null,
         logs: [],
         loading: false,
-        rosbridge_address: 'wss://i-0e5e1254f8a2a6e3b.robotigniteacademy.com/5ba9fdc4-e000-4d0f-a481-00dc1232b573/rosbridge/',
+        rosbridge_address: 'wss://i-08a84af876c97d4f7.robotigniteacademy.com/d9515df6-3a0b-429f-a768-d4c6988eac1b/rosbridge/',
         port: '9090',
         interval: null,
         // Mapping stuff
@@ -96,8 +96,8 @@ var app = new Vue({
         setupMapViewer: function() {
             this.mapViewer = new ROS2D.Viewer({
                 divID: 'divMap',
-                width: 1040,
-                height: 585
+                width: 704,
+                height: 396
             })
 
             // Setup the map client.
@@ -108,8 +108,8 @@ var app = new Vue({
             })
             // Scale the canvas to fit to the map
             this.mapGridClient.on('change', () => {
-                this.mapViewer.scaleToDimensions(this.mapGridClient.currentGrid.width, this.mapGridClient.currentGrid.height);
-                this.mapViewer.shift(this.mapGridClient.currentGrid.pose.position.x, this.mapGridClient.currentGrid.pose.position.y)
+                this.mapViewer.scaleToDimensions(0.15*this.mapGridClient.currentGrid.width, 0.15*this.mapGridClient.currentGrid.height);
+                this.mapViewer.shift(0.15*this.mapGridClient.currentGrid.pose.position.x, 0.15*this.mapGridClient.currentGrid.pose.position.y)
             })
         },
         unsetMap: function() {
@@ -127,9 +127,9 @@ var app = new Vue({
 
             // Add a grid.
             this.viewer.addObject(new ROS3D.Grid({
-                color:'#0181c4',
-                cellSize: 0.5,
-                num_cells: 100
+                color:'#000000',
+                cellSize: 1.0,
+                num_cells: 10
             }))
 
             // Setup a client to listen to TFs.
@@ -148,7 +148,7 @@ var app = new Vue({
                 // We use "path: location.origin + location.pathname"
                 // instead of "path: window.location.href" to remove query params,
                 // otherwise the assets fail to load
-                path: "./tortoisebot_description/urdf", //location.origin + location.pathname,
+                path: location.origin + location.pathname,
                 rootObject: this.viewer.scene,
                 loader: ROS3D.COLLADA_LOADER_2
             })
@@ -174,9 +174,10 @@ var app = new Vue({
         },
         stopDrag() {
             this.dragging = false
-            this.x = this.y = 'no'
+            this.x = this.y = 0
             this.dragCircleStyle.display = 'none'
             this.resetJoystickVals()
+            this.sendCommand()
         },
         doDrag(event) {
             if (this.dragging) {
