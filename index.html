@@ -85,11 +85,11 @@
         }
 
         .connect {
-            height: 210px;
+            height: 230px;
         }
 
         .logs {
-            height: 170px;
+            height: 500px;
         }
 
         .second-row {
@@ -101,7 +101,7 @@
         }
 
         .robot-model {
-            height: 245px;
+            height: 225px;
         }
 
         .map {
@@ -134,7 +134,7 @@
                         <label>ROSBridge address</label>
                         <br>
                         <input type="text" v-model="rosbridge_address" />
-                        <br>
+                        <br><br>
                         <button :disabled="loading" class="btn btn-danger btn-large" @click="disconnect"
                             v-if="connected">Disconnect!</button>
                         <button :disabled="loading" class="btn btn-success btn-large" @click="connect"
@@ -152,16 +152,6 @@
                         <p v-for="log in logs">{{ log }}</p>
                     </div>
                 </div>
-                <div class="card mt-2">
-                    <div class="card-header">
-                        <h2>Waypoints</h2>
-                    </div>
-                    <div class="card-body ">
-                        <div class="box box1">
-                            <img src="./ressources/tortoise-waypoint.png">
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="col-5">
                 <div class="card mt-2">
@@ -172,33 +162,23 @@
                         <div class="row second-row">
                             <div class="col-6 text-center">
                                 <button :disabled="loading" class="btn btn-primary btn-wayp"
-                                    @click="setGoal(0.7, -0.5)">Waypoint: 1</button>
+                                    @click="setGoal(-0.6, 0.0)">Waypoint: 1</button>
                                 <button :disabled="loading" class="btn btn-primary btn-wayp"
-                                    @click="setGoal(0.65, 0.35)">Waypoint: 2</button>
+                                    @click="setGoal(-0.05, -0.25)">Waypoint: 2</button>
                                 <button :disabled="loading" class="btn btn-primary btn-wayp"
-                                    @click="setGoal(0.2, 0.45)">Waypoint: 3</button>
+                                    @click="setGoal(0.15, 0.5)">Waypoint: 3</button>
                                 <button :disabled="loading" class="btn btn-primary btn-wayp"
-                                    @click="setGoal(0.2, 0.0)">Waypoint: 4</button>
+                                    @click="setGoal(0.3, -0.55)">Waypoint: 4</button>
                                 <button :disabled="loading" class="btn btn-primary btn-wayp"
-                                    @click="setGoal(-0.1, 0.05)">Waypoint: 5</button>
-                                <button :disabled="loading" class="btn btn-primary btn-wayp"
-                                    @click="setGoal(-0.2, 0.45)">Waypoint: 6</button>
-                                <button :disabled="loading" class="btn btn-primary btn-wayp"
-                                    @click="setGoal(-0.6, 0.55)">Waypoint: 7</button>
-                                <button :disabled="loading" class="btn btn-primary btn-wayp"
-                                    @click="setGoal(-0.2, -0.45)">Waypoint: 8</button>
-                                <button :disabled="loading" class="btn btn-primary btn-wayp"
-                                    @click="setGoal(-0.58, -0.55)">Waypoint: 9</button>
+                                    @click="setGoal(0.6, 0.1)">Waypoint: 5</button>
                                 <br />
                                 <button :disabled="loading" class="btn btn-success btn-as" @click="sendGoal">Send
                                     goal</button>
                                 <button :disabled="loading" class="btn btn-danger btn-as" @click="cancelGoal">Cancel
                                     goal</button>
                             </div>
-                            <div style="border-left:1px solid #ccc;height:350px"></div>
+                            <div style="border-left:1px solid #ccc;height:280px"></div>
                             <div class="col-5">
-                                <p class="text-success">{{ action.status.text }} &nbsp;</p>
-                                <hr style="margin-top: 2px; margin-bottom: 10px;">
                                 <p style="margin-bottom: 0px;">Pos:</p>
                                 <div class="row second-row">
                                     <div class="col-6">

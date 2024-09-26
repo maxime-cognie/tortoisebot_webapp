@@ -36,7 +36,7 @@ var app = new Vue({
         // Action messages
         goal: null,
         action: {
-            goal: { position: {x: 0, y: 0, z: 0} },
+            goal: { position: { x: 0, y: 0, z: 0 } },
             feedback: { position: 0, state: 'idle' },
             result: { success: false },
             status: { status: 0, text: '' },
@@ -44,7 +44,7 @@ var app = new Vue({
     },
     // helper methods to connect to ROS
     methods: {
-        connect: function() {
+        connect: function () {
             this.loading = true
             this.ros = new ROSLIB.Ros({
                 url: this.rosbridge_address
@@ -69,13 +69,13 @@ var app = new Vue({
                 this.unsetMap()
             })
         },
-        disconnect: function() {
+        disconnect: function () {
             this.ros.close()
         },
-        clearLog: function() {
+        clearLog: function () {
             this.logs = []
         },
-        setCamera: function() {
+        setCamera: function () {
             let without_wss = this.rosbridge_address.split('wss://')[1]
             console.log(without_wss)
             let domain = without_wss.split('/')[0] + '/' + without_wss.split('/')[1]
@@ -90,10 +90,10 @@ var app = new Vue({
                 ssl: true,
             })
         },
-        unsetCamera: function() {
+        unsetCamera: function () {
             document.getElementById('divCamera').innerHTML = ''
         },
-        setupMapViewer: function() {
+        setupMapViewer: function () {
             this.mapViewer = new ROS2D.Viewer({
                 divID: 'divMap',
                 width: 704,
@@ -108,26 +108,26 @@ var app = new Vue({
             })
             // Scale the canvas to fit to the map
             this.mapGridClient.on('change', () => {
-                this.mapViewer.scaleToDimensions(0.15*this.mapGridClient.currentGrid.width, 0.15*this.mapGridClient.currentGrid.height);
-                this.mapViewer.shift(0.15*this.mapGridClient.currentGrid.pose.position.x, 0.15*this.mapGridClient.currentGrid.pose.position.y)
+                this.mapViewer.scaleToDimensions(0.1 * this.mapGridClient.currentGrid.width, 0.1 * this.mapGridClient.currentGrid.height);
+                this.mapViewer.shift(0.1 * this.mapGridClient.currentGrid.pose.position.x, 0.1 * this.mapGridClient.currentGrid.pose.position.y)
             })
         },
-        unsetMap: function() {
+        unsetMap: function () {
             document.getElementById('divMap').innerHTML = ''
         },
-        setup3DViewer: function() {
+        setup3DViewer: function () {
             this.viewer = new ROS3D.Viewer({
                 background: '#cccccc',
                 divID: 'div3DViewer',
-                width: 416,
-                height: 234,
+                width: 384,
+                height: 216,
                 antialias: true,
                 fixedFrame: 'odom'
             })
 
             // Add a grid.
             this.viewer.addObject(new ROS3D.Grid({
-                color:'#000000',
+                color: '#000000',
                 cellSize: 1.0,
                 num_cells: 10
             }))
@@ -156,14 +156,14 @@ var app = new Vue({
         unset3DViewer() {
             document.getElementById('div3DViewer').innerHTML = ''
         },
-        sendCommand: function() {
+        sendCommand: function () {
             let topic = new ROSLIB.Topic({
                 ros: this.ros,
                 name: '/cmd_vel',
                 messageType: 'geometry_msgs/Twist'
             })
             let message = new ROSLIB.Message({
-                linear: { x: this.joystick.vertical , y: 0, z: 0, },
+                linear: { x: this.joystick.vertical, y: 0, z: 0, },
                 angular: { x: 0, y: 0, z: this.joystick.horizontal, },
             })
             topic.publish(message)
@@ -208,15 +208,15 @@ var app = new Vue({
             this.joystick.vertical = 0
             this.joystick.horizontal = 0
         },
-        sendGoal: function() {
+        sendGoal: function () {
             let actionClient = new ROSLIB.ActionClient({
-                ros : this.ros,
-                serverName : '/tortoisebot_as',
-                actionName : 'course_web_dev_ros/WaypointActionAction'
+                ros: this.ros,
+                serverName: '/tortoisebot_as',
+                actionName: 'course_web_dev_ros/WaypointActionAction'
             })
 
             this.goal = new ROSLIB.Goal({
-                actionClient : actionClient,
+                actionClient: actionClient,
                 goalMessage: {
                     ...this.action.goal
                 }
@@ -236,11 +236,11 @@ var app = new Vue({
 
             this.goal.send()
         },
-        setGoal: function(x, y) {
+        setGoal: function (x, y) {
             this.action.goal.position.x = x;
             this.action.goal.position.y = y;
         },
-        cancelGoal: function() {
+        cancelGoal: function () {
             this.goal.cancel()
         },
     },
